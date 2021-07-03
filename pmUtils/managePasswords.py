@@ -1,9 +1,8 @@
 import json
 from os import path
+from . import check
 
-import main
-
-OTHER_PASSWORD = main.OTHER_PASSWORDS
+OTHER_PASSWORD = check.OTHER_PASSWORDS
 dmain = {
     1: "instagram",
     2: "facebook",
