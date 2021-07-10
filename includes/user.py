@@ -13,53 +13,53 @@ DOMAINS = {
 
 class User:
     def __init__(self):
-        if check.osType() == "win32":
-            self.__homePath = check.getEnv("USERPROFILE")
+        if check.os_type() == "win32":
+            self.__homePath = check.get_env("USERPROFILE")
         else:
-            self.__homePath = check.getEnv("HOME")
+            self.__homePath = check.get_env("HOME")
 
-        if check.isPwdSet(self.__homePath, check.MASTER_PASSWORD):
+        if check.is_pwd_set(self.__homePath, check.MASTER_PASSWORD):
             passwd = input("Hello! Enter you master password: ")
-            self.sayHello(passwd)
+            self.login_user(passwd)
         else:
             master_password = input(
                 "Hello! Never saw you here! Please register yourself with a master password.\nPassword: "
             )
-            self.registerUser(master_password)
+            self.register_user(master_password)
 
-    def sayHello(self, passwd):
+    def login_user(self, passwd):
         # passwd = input("Hello! Enter you master password: ")
         with open(
             os.path.join(self.__homePath, check.MASTER_PASSWORD), "r"
         ) as masterPasswdFile:
-            newPasswd = json.loads(masterPasswdFile.read()).get("password")
-            if newPasswd == passwd:
-                myPasswords = managePasswords.managePassword(self.__homePath)
-                _main(myPasswords)
+            new_passwd = json.loads(masterPasswdFile.read()).get("password")
+            if new_passwd == passwd:
+                my_passwords = managePasswords.ManagePassword(self.__homePath)
+                _main(my_passwords)
 
-    def registerUser(self, masterPassword):
+    def register_user(self, master_password):
         # masterPassword = input(
         #     "Hello! Never saw you here! Please register yourself with a master password.\nPassword: ")
         with open(
             os.path.join(self.__homePath, check.MASTER_PASSWORD), "w"
         ) as masterPasswdFile:
-            newPasswd = json.dumps({"password": masterPassword})
-            masterPasswdFile.write(newPasswd)
+            new_passwd = json.dumps({"password": master_password})
+            masterPasswdFile.write(new_passwd)
         with open(
             os.path.join(self.__homePath, check.OTHER_PASSWORDS), "w"
         ) as passwdFile:
-            defaultPasswd = json.dumps(DOMAINS)
-            passwdFile.write(defaultPasswd)
-        self.sayHello()
+            default_passwd = json.dumps(DOMAINS)
+            passwdFile.write(default_passwd)
+        self.login_user()
 
 
-def _main(myPasswords):
+def _main(my_passwords):
     while True:
         ask = input("\n0. Quit\n1. Add password\n2. Get Password\nEnter your choice: ")
         if ask == "1":
-            myPasswords.addPasswords()
+            my_passwords.add_passwords()
         elif ask == "2":
-            myPasswords.getPasswords()
+            my_passwords.get_passwords()
         elif ask == "0":
             exit(0)
         else:
@@ -68,4 +68,4 @@ def _main(myPasswords):
 | Invalid option. Try again later. |
 ------------------------------------"""
             )
-            _main(myPasswords)
+            _main(my_passwords)
