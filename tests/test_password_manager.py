@@ -1,6 +1,13 @@
 try:
     import pytest
 except ModuleNotFoundError as e:
-    print(f"Module Missing! Install dependencies from requirement.txt file: {e.name}")
+    print(
+        "Module Missing! Install "
+        f"dependencies from requirement.txt file: {e.name}"
+    )
 
-# TODO
+
+@pytest.fixture()
+def temporary_function():
+    # TODO
+    pass

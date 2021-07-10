@@ -23,12 +23,15 @@ class User:
             self.sayHello(passwd)
         else:
             master_password = input(
-                "Hello! Never saw you here! Please register yourself with a master password.\nPassword: ")
+                "Hello! Never saw you here! Please register yourself with a master password.\nPassword: "
+            )
             self.registerUser(master_password)
 
     def sayHello(self, passwd):
         # passwd = input("Hello! Enter you master password: ")
-        with open(os.path.join(self.__homePath, check.MASTER_PASSWORD), "r") as masterPasswdFile:
+        with open(
+            os.path.join(self.__homePath, check.MASTER_PASSWORD), "r"
+        ) as masterPasswdFile:
             newPasswd = json.loads(masterPasswdFile.read()).get("password")
             if newPasswd == passwd:
                 myPasswords = managePasswords.managePassword(self.__homePath)
@@ -37,14 +40,14 @@ class User:
     def registerUser(self, masterPassword):
         # masterPassword = input(
         #     "Hello! Never saw you here! Please register yourself with a master password.\nPassword: ")
-        with open(os.path.join(self.__homePath, check.MASTER_PASSWORD), "w") as masterPasswdFile:
-            newPasswd = json.dumps(
-                {
-                    "password": masterPassword
-                }
-            )
+        with open(
+            os.path.join(self.__homePath, check.MASTER_PASSWORD), "w"
+        ) as masterPasswdFile:
+            newPasswd = json.dumps({"password": masterPassword})
             masterPasswdFile.write(newPasswd)
-        with open(os.path.join(self.__homePath, check.OTHER_PASSWORDS), "w") as passwdFile:
+        with open(
+            os.path.join(self.__homePath, check.OTHER_PASSWORDS), "w"
+        ) as passwdFile:
             defaultPasswd = json.dumps(DOMAINS)
             passwdFile.write(defaultPasswd)
         self.sayHello()
@@ -60,7 +63,9 @@ def _main(myPasswords):
         elif ask == "0":
             exit(0)
         else:
-            print("""\n------------------------------------
+            print(
+                """\n------------------------------------
 | Invalid option. Try again later. |
-------------------------------------""")
+------------------------------------"""
+            )
             _main(myPasswords)
