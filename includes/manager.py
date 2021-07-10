@@ -40,3 +40,12 @@ class ManagePassword:
                 break
 
     def list_usernames(self):
+        if utils.is_pwd_set:
+            uname_file = open(self.password_file, "r").read()
+            uname_file = eval(uname_file)
+            count = 1
+            for i in uname_file["instagram"]:
+                print("\n----------------------------")
+                print("\n", count, ": ", i["username"])
+                print("\n----------------------------")
+                count += 1
